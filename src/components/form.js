@@ -2,12 +2,12 @@ import React from 'react'
 
 export default function Form({ handleSubmit, value, setValue, cost, setCost }) {
     const handleValueChange = (e) => {
-        console.log(e.target.value);
+        // console.log(e.target.value);
         setValue(e.target.value);
     }
 
     const handleCostChange = (e) => {
-        console.log(e.target.value);
+        // console.log(e.target.value);
         setCost(e.target.value);
     }
 
