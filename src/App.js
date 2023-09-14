@@ -8,6 +8,7 @@ export default function App() {
   const [budget, setBudget] = useState([]);
   const [value, setValue] = useState("");
   const [cost, setCost] = useState("");
+  const [total, setTotal] = useState(0);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -23,11 +24,14 @@ export default function App() {
     setBudget(prev => [...prev, newBudget])
     setValue("")
     setCost("")
+    setTotal(prev => parseInt(prev)+parseInt(cost));
   }
 
   const handleEdit = (e)=>{
     console.log(e);
   }
+ 
+
 
   return (
     <div className="pt-4 px-5 flex bg-orange-300 h-screen w-screen flex-col">
@@ -36,8 +40,9 @@ export default function App() {
       </p>
       <div className="flex bg-white w-full py-3 px-5 mt-5 flex-col">
         <Form handleSubmit={handleSubmit} value={value} setValue={setValue} cost={cost} setCost={setCost} />
-        <div className="mt-3"><List budget={budget} setBudget={setBudget} handleEdit={handleEdit}/></div>
+        <div className="mt-3"><List budget={budget} setBudget={setBudget} total={total} setTotal={setTotal} handleEdit={handleEdit}/></div>
       </div>
+      <div className="flex justify-end">총지출: {total}원</div>
     </div>
   )
 

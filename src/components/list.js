@@ -1,13 +1,22 @@
 import React from 'react'
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd"
 
-export default function List({ budget, setBudget, handleEdit }) {
+export default function List({ budget, setBudget, total, setTotal, handleEdit }) {
 
 
     const handleDelete = (id)=>{
+
+        let delbudget = budget.filter(x=>x.id===id);
+        // console.log(delbudget)
+        setTotal(prev=>parseInt(prev)-parseInt(delbudget[0].money))
         let newbudget = budget.filter(x => x.id!==id);
         // console.log(newbudget);
         setBudget(newbudget);
+    }
+
+    const handleDeleteAll = ()=>{
+        setBudget([]);
+        setTotal(0)
     }
 
     const handleEnd=(result)=>{
@@ -59,7 +68,7 @@ export default function List({ budget, setBudget, handleEdit }) {
                     </div>
                 )}
             </Droppable>
-            <button>목록 지우기</button>
+            <button onClick={handleDeleteAll}>목록 지우기</button>
 
 
         </DragDropContext>
