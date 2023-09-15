@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './App.css';
 import Form from "./components/form";
-import List from "./components/list";
+import Lists from "./components/lists";
 
 export default function App() {
 
@@ -40,7 +40,7 @@ export default function App() {
       </p>
       <div className="flex bg-white w-full py-3 px-5 mt-5 flex-col">
         <Form handleSubmit={handleSubmit} value={value} setValue={setValue} cost={cost} setCost={setCost} />
-        <div className="mt-3"><List budget={budget} setBudget={setBudget} total={total} setTotal={setTotal} handleEdit={handleEdit}/></div>
+        <div className="mt-3"><Lists budget={budget} setBudget={setBudget} total={total} setTotal={setTotal} handleEdit={handleEdit}/></div>
       </div>
       <div className="flex justify-end">총지출: {total}원</div>
     </div>

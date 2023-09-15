@@ -1,11 +1,11 @@
 import React from 'react'
-import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd"
 
-export default function List({ budget, setBudget, total, setTotal, handleEdit }) {
-
+const List = React.memo(function (
+    {id, title, money, budget, setBudget, total, setTotal, provided, snapshot, handleEdit}
+) {
+    console.log(provided);
 
     const handleDelete = (id)=>{
-
         let delbudget = budget.filter(x=>x.id===id);
         // console.log(delbudget)
         setTotal(prev=>parseInt(prev)-parseInt(delbudget[0].money))
@@ -14,63 +14,25 @@ export default function List({ budget, setBudget, total, setTotal, handleEdit })
         setBudget(newbudget);
     }
 
-    const handleDeleteAll = ()=>{
-        setBudget([]);
-        setTotal(0)
-    }
-
-    const handleEnd=(result)=>{
-        console.log('result', result);
-        if(!result.destination) return;
-
-        const newBudget = budget;
-
-        const [reorderedItem] = newBudget.splice(result.source.index, 1);
-
-        budget.splice(result.destination.index, 0, reorderedItem);
-
-        setBudget(newBudget);
-    }
-
-
-
     return (
-        <DragDropContext onDragEnd={handleEnd}>
-            <Droppable droppableId="budget">
-                {(provided) => (
-                    <div {...provided.droppableProps} ref={provided.innerRef}>
-                        {budget.map((data, index) => (
-                            <Draggable
-                                key={data.id}
-                                draggableId={data.id.toString()}
-                                index={index}
-                            >
-                                {(provided, snapshot) => (
-                                    <div key={data.id}
-                                        {...provided.draggableProps}
-                                        ref={provided.innerRef}
-                                        {...provided.dragHandleProps}
-                                        className={`${snapshot.isDragging ? "bg-gray400" : "bg-white"} flex flex-row my-3 w-full border rounded px-5 py-3`}
-                                    >
-                                            <div className="flex w-full">{data.title}</div>
-                                            <div className="flex w-full justify-between">
-                                                <div className="flex">{data.money}</div>
-                                                <div>
-                                                    <button className="mr-3" onClick={()=>handleEdit(data.id)}>수정</button>
-                                                    <button onClick={()=>handleDelete(data.id)}>삭제</button>
-                                                </div>
-                                            </div>
+        <div
+            key={id}
+            {...provided.draggableProps}
+            ref={provided.innerRef}
+            {...provided.dragHandleProps}
+            className={`${snapshot.isDragging ? "bg-gray400" : "bg-white"} flex flex-row my-3 w-full border rounded px-5 py-3`}
+        >
+            <div className="flex w-full">{title}</div>
+            <div className="flex w-full justify-between">
+                <div className="flex">{money}</div>
+                <div>
+                    <button className="mr-3" onClick={() => handleEdit(id)}>수정</button>
+                    <button onClick={() => handleDelete(id)}>삭제</button>
+                </div>
+            </div>
 
-                                    </div>
-                                )}
-                            </Draggable>
-                        ))}
-                    </div>
-                )}
-            </Droppable>
-            <button onClick={handleDeleteAll}>목록 지우기</button>
-
-
-        </DragDropContext>
+        </div>
     )
-}
+});
+
+export default List
