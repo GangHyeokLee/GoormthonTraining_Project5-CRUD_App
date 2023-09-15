@@ -2,19 +2,16 @@ import React from 'react'
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd"
 import List from "./list";
 
-export default function Lists({ budget, setBudget, total, setTotal, handleEdit }) {
 
-
-    
-
-    const handleDeleteAll = ()=>{
+const Lists = ({ budget, setBudget, total, setTotal, handleEdit }) => {
+    const handleDeleteAll = () => {
         setBudget([]);
         setTotal(0)
     }
 
-    const handleEnd=(result)=>{
+    const handleEnd = (result) => {
         console.log('result', result);
-        if(!result.destination) return;
+        if (!result.destination) return;
 
         const newBudget = budget;
 
@@ -24,8 +21,6 @@ export default function Lists({ budget, setBudget, total, setTotal, handleEdit }
 
         setBudget(newBudget);
     }
-
-
 
     return (
         <DragDropContext onDragEnd={handleEnd}>
@@ -40,17 +35,17 @@ export default function Lists({ budget, setBudget, total, setTotal, handleEdit }
                             >
                                 {(provided, snapshot) => (
                                     <List
-                                    key={data.id}
-                                    id={data.id}
-                                    title={data.title} 
-                                    money={data.money}
-                                    budget={budget}
-                                    setBudget={setBudget}
-                                    total={total}
-                                    setTotal={setTotal}
-                                    provided={provided}
-                                    snapshot={snapshot}
-                                    handleEdit={handleEdit}
+                                        key={data.id}
+                                        id={data.id}
+                                        title={data.title}
+                                        money={data.money}
+                                        budget={budget}
+                                        setBudget={setBudget}
+                                        total={total}
+                                        setTotal={setTotal}
+                                        provided={provided}
+                                        snapshot={snapshot}
+                                        handleEdit={handleEdit}
                                     />
                                 )}
                             </Draggable>
@@ -62,4 +57,7 @@ export default function Lists({ budget, setBudget, total, setTotal, handleEdit }
             <button onClick={handleDeleteAll}>목록 지우기</button>
         </DragDropContext>
     )
+
 }
+
+export default Lists
