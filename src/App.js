@@ -33,21 +33,17 @@ export default function App() {
     e.preventDefault();
     if(!value || !cost) return;
 
-    let newBudget = {
-      id: editTargetId,
-      title:value,
-      money:cost,
-    }
-
-    budget.map(x=>{
-      if(x.id === editTargetId){
-        setTotal(prev=> parseInt(prev)-parseInt(x.money) + parseInt(cost));
-        return newBudget;
+    let newBudget = budget.map(data=>{
+      if(data.id===editTargetId){
+        setTotal(parseInt(total) - parseInt(data.money) + parseInt(cost)); //총 지출 변경
+        data.title=value;
+        data.money=cost
       }
-    })
-    
-    setBudget(budget);
 
+      return data;
+    })    
+
+    setBudget(newBudget);
     console.log(budget);
 
     setIsEditing(false);
