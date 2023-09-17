@@ -7,6 +7,7 @@ const Lists = ({ budget, setBudget, total, setTotal, isEditing, setIsEditing, ed
     const handleDeleteAll = () => {
         setBudget([]);
         setTotal(0)
+        localStorage.setItem("total", JSON.stringify(0))
     }
 
     const handleEnd = (result) => {
@@ -16,6 +17,7 @@ const Lists = ({ budget, setBudget, total, setTotal, isEditing, setIsEditing, ed
         const [reorderedItem] = newBudget.splice(result.source.index, 1);
         budget.splice(result.destination.index, 0, reorderedItem);
         setBudget(newBudget);
+        localStorage.setItem("budget", JSON.stringify(newBudget))
     }
 
     return (

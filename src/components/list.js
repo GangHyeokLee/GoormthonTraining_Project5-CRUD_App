@@ -8,9 +8,11 @@ const List = React.memo(function (
         let delbudget = budget.filter(x=>x.id===id);
         // console.log(delbudget)
         setTotal(prev=>parseInt(prev)-parseInt(delbudget[0].money))
+        localStorage.setItem("total", JSON.stringify(parseInt(total)-parseInt(delbudget[0].money)))
         let newbudget = budget.filter(x => x.id!==id);
         // console.log(newbudget);
         setBudget(newbudget);
+        localStorage.setItem("budget", JSON.stringify(newbudget))
     }
 
     const handleEdit = (e)=>{

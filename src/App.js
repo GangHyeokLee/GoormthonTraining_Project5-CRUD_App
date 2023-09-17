@@ -3,12 +3,15 @@ import './App.css';
 import Form from "./components/form";
 import Lists from "./components/lists";
 
+const initialBudget = localStorage.getItem("budget")?JSON.parse(localStorage.getItem("budget")):[];
+const initialTotal = localStorage.getItem("total")?JSON.parse(localStorage.getItem("total")):0;
+
 export default function App() {
 
-  const [budget, setBudget] = useState([]);
+  const [budget, setBudget] = useState(initialBudget);
   const [value, setValue] = useState("");
   const [cost, setCost] = useState("");
-  const [total, setTotal] = useState(0);
+  const [total, setTotal] = useState(initialTotal);
   const [isEditing, setIsEditing] = useState(false);
   const [editTargetId, setEditTargetId] = useState("");
 
@@ -24,9 +27,11 @@ export default function App() {
     console.log(newBudget)
 
     setBudget(prev => [...prev, newBudget])
+    localStorage.setItem("budget", JSON.stringify([...budget, newBudget]));
     setValue("")
     setCost("")
     setTotal(prev => parseInt(prev) + parseInt(cost));
+    localStorage.setItem("total", JSON.stringify(parseInt(total) + parseInt(cost)));
   }
 
   const handleSubmitEdit =(e)=>{
@@ -36,6 +41,7 @@ export default function App() {
     let newBudget = budget.map(data=>{
       if(data.id===editTargetId){
         setTotal(parseInt(total) - parseInt(data.money) + parseInt(cost)); //총 지출 변경
+        localStorage.setItem("total", JSON.stringify(parseInt(total) - parseInt(data.money) + parseInt(cost)));
         data.title=value;
         data.money=cost
       }
@@ -44,6 +50,7 @@ export default function App() {
     })    
 
     setBudget(newBudget);
+    localStorage.setItem("budget", JSON.stringify(newBudget));
     console.log(budget);
 
     setIsEditing(false);
